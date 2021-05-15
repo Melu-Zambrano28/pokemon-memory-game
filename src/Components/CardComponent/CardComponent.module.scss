@@ -1,0 +1,15 @@
+.cardContainer {
+  color: white;
+  background-color: blueviolet;
+  height: 150px;
+  width: 150px;
+  font-size: 1rem;
+  margin: 1rem;
+}
+
+.cardContent {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
