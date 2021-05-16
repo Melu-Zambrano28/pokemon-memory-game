@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { IsGameOver } from '../../Utils/functionUtils'
+import {
+  getDeck,
+  getFirstNPokemon,
+  IsGameOver,
+} from '../../Utils/functionUtils'
 import { CardComponent } from '../CardComponent/CardComponent'
 import style from './GameComponent.module.scss'
 
@@ -23,22 +27,35 @@ const Game: React.FunctionComponent<GameProps> = ({ pokemonArray }) => {
   const [cardToCheck, setCardToCheck] = useState<CardWithIndex | null>(null)
   const [isClicked, setIsClicked] = useState(false)
   const [score, setScore] = useState(0)
-
-  useEffect(() => {
-    const fetchImages = () => {
-      const imagePath = process.env.REACT_APP_IMAGE_POKEMON_PATH
-      pokemonArray.map((el) => {
-        return fetch(`${imagePath}${el.pokemonName}.svg`)
-      })
-    }
-    fetchImages()
-  }, [pokemonArray])
+  const [isPlayAgain, setIsPlayAgain] = useState(false)
 
   useEffect(() => {
     if (IsGameOver(allCards)) {
       setVictoryState(true)
     }
   }, [allCards, victoryState])
+
+  useEffect(() => {
+    if (isPlayAgain) {
+      setIsPlayAgain(false)
+      const numPokemon = pokemonArray.length / 2
+      const newFirstNPokemon = getFirstNPokemon(numPokemon)
+      const newPokemonDeck = getDeck(newFirstNPokemon)
+      setAllCards(newPokemonDeck)
+      setVictoryState(false)
+      setCardToCheck(null)
+      setIsClicked(false)
+      setScore(0)
+    }
+  }, [
+    pokemonArray,
+    isPlayAgain,
+    allCards,
+    victoryState,
+    cardToCheck,
+    isClicked,
+    score,
+  ])
 
   const toggleCard = (index: number) => {
     setAllCards((prevState) => {
@@ -118,10 +135,19 @@ const Game: React.FunctionComponent<GameProps> = ({ pokemonArray }) => {
     <div>
       <div className={style.game}>
         <div className={style.gameInfo}>
+          <div className={style.gameInfoForItems}>Score: {score}</div>
           {victoryState && (
             <div className={style.gameInfoForItems}>You win!</div>
           )}
-          <div className={style.gameInfoForItems}>Score: {score}</div>
+
+          <button
+            className={`${style.gameInfoForItems} ${style.playAgainButton}`}
+            onClick={() => {
+              setIsPlayAgain(true)
+            }}
+          >
+            Play again
+          </button>
         </div>
         <div className={style.deck}>
           {allCards.map((card, indexCard) => {

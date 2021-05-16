@@ -1,5 +1,4 @@
-$margin15: 15px;
-$textCenter: center;
+@import '../../DesignSystem/DesignApp.module.scss';
 
 .deck {
   max-width: 48rem;
@@ -7,18 +6,27 @@ $textCenter: center;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  background-color: #023e7d;
+  background-color: $darkBlue;
 }
 
 .gameInfo {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
 }
 
 .gameInfoForItems {
   width: 50%;
-  margin: $margin15;
-  text-align: $textCenter;
+  margin: 15px;
+  text-align: center;
   font-size: 2rem;
+  @include box-radius($green);
+}
+
+.playAgainButton {
+  cursor: pointer;
+  &:hover {
+    background-color: $pink;
+  }
 }

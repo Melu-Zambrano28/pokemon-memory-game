@@ -21,4 +21,11 @@ const IsGameOver = (allCards: Card[]): boolean => {
   return true
 }
 
-export { shuffle, getDeck, IsGameOver }
+const getFirstNPokemon = (numberOfPokemon: number): string[] => {
+  const arrayWithElement: string[] = Array(numberOfPokemon)
+    .fill('')
+    .map((el) => Math.floor(Math.random() * 151 + 1).toString())
+
+  return arrayWithElement
+}
+export { shuffle, getDeck, IsGameOver, getFirstNPokemon }

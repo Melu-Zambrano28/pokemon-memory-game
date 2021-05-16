@@ -1,14 +1,11 @@
 import React from 'react'
 import style from './App.module.scss'
 import { Game } from './Components/GameComponent/GameComponent'
-import { getDeck } from './Utils/functionUtils'
+import { getDeck, getFirstNPokemon } from './Utils/functionUtils'
 
 const App: React.FunctionComponent = () => {
-  const pokemonArray = getDeck(
-    Array(4)
-      .fill('')
-      .map((el) => Math.floor(Math.random() * 151 + 1).toString())
-  )
+  const firstNPokemon = getFirstNPokemon(4)
+  const pokemonArray = getDeck(firstNPokemon)
   return (
     <div className={style.App}>
       <div>
