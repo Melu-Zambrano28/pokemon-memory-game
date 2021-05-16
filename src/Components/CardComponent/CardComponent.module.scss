@@ -1,10 +1,15 @@
+$pink: #ff99c8;
+$green: #d0f4de;
+$darkGreen: #1a535c;
+
 .cardContainer {
-  color: white;
-  background-color: blueviolet;
   height: 150px;
   width: 150px;
   font-size: 1rem;
   margin: 1rem;
+  border: solid 2px $darkGreen;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 .cardContent {
@@ -12,4 +17,16 @@
   height: 100%;
   align-items: center;
   justify-content: center;
+}
+
+.pokemon {
+  width: 70%;
+}
+
+.CardbackgroundColor {
+  background-color: $pink;
+}
+
+.cardMatched {
+  background-color: $green;
 }

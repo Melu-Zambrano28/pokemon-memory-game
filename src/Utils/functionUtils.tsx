@@ -1,4 +1,4 @@
-import { Card } from '../App'
+import { Card } from '../Components/GameComponent/GameComponent'
 
 const shuffle = (array: string[]) => {
   const arraySorted = array.sort(() => Math.floor(Math.random() - 0.5))
