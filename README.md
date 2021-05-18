@@ -1,7 +1,3 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Available Scripts
 
 In the project directory, you can run:
@@ -13,11 +9,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `yarn build`
 
@@ -39,8 +30,36 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## Spanish version
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+A continuaciòn veràs los comandos màs importantes para que puedas ejecutar la aplicaciòn en ambiente local.\
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### `yarn install`
+
+Usa este comando para installar todas las dependencias presentes en el proyecto .\
+
+La pagina se actualizarà, cada vez que aportas modificas.\
+
+Tambièn veràs cualquier tipo de error en la console.
+
+### `yarn start`
+
+Sirve para hacer partir el proyecto en tu ambiente local .\
+Abre [http://localhost:3000](http://localhost:3000) para ver la applicaciòn en el browser.
+
+### Italian Version
+
+Di seguito troverai i comandi più importanti per runnare la applicazione nel tuo ambiente locale .\
+
+### `yarn install`
+
+Usa questo comando per istallare tutte le dipendenze del progetto .\
+
+La pagina verrà ricaricata se apporti modifiche. \
+
+Nella console verranno visualizzati anche eventuali errori.
+
+### `yarn start`
+
+Usa questo comando per runnare la applicazione da locale .\
+Apri [http://localhost:3000](http://localhost:3000) per visualizzare la applicazione nel browser.
