@@ -32,34 +32,34 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## Spanish version
 
-A continuaciòn veràs los comandos màs importantes para que puedas ejecutar la aplicaciòn en ambiente local.\
+A continuaciòn veràs los comandos màs importantes para que puedas ejecutar la aplicaciòn en ambiente local.
 
 ### `yarn install`
 
-Usa este comando para installar todas las dependencias presentes en el proyecto .\
+Usa este comando para installar todas las dependencias presentes en el proyecto .
 
-La pagina se actualizarà, cada vez que aportas modificas.\
+La pagina se actualizarà, cada vez que aportas modificas.
 
 Tambièn veràs cualquier tipo de error en la console.
 
 ### `yarn start`
 
-Sirve para hacer partir el proyecto en tu ambiente local .\
+Sirve para hacer partir el proyecto en tu ambiente local .
 Abre [http://localhost:3000](http://localhost:3000) para ver la applicaciòn en el browser.
 
-### Italian Version
+## Italian Version
 
-Di seguito troverai i comandi più importanti per runnare la applicazione nel tuo ambiente locale .\
+Di seguito troverai i comandi più importanti per runnare la applicazione nel tuo ambiente locale .
 
 ### `yarn install`
 
-Usa questo comando per istallare tutte le dipendenze del progetto .\
+Usa questo comando per istallare tutte le dipendenze del progetto .
 
-La pagina verrà ricaricata se apporti modifiche. \
+La pagina verrà ricaricata se apporti modifiche.
 
 Nella console verranno visualizzati anche eventuali errori.
 
 ### `yarn start`
 
-Usa questo comando per runnare la applicazione da locale .\
+Usa questo comando per runnare la applicazione da locale .
 Apri [http://localhost:3000](http://localhost:3000) per visualizzare la applicazione nel browser.
