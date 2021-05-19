@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  getDeck,
-  getFirstNPokemon,
-  IsGameOver,
-} from '../../Utils/functionUtils'
+import { IsGameOver } from '../../Utils/functionUtils'
 import { CardComponent } from '../CardComponent/CardComponent'
 import style from './GameComponent.module.scss'
 
@@ -19,43 +15,32 @@ type CardWithIndex = Card & {
 
 type GameProps = {
   pokemonArray: Card[]
+  resetGame: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Game: React.FunctionComponent<GameProps> = ({ pokemonArray }) => {
+const Game: React.FunctionComponent<GameProps> = ({
+  pokemonArray,
+  resetGame,
+}) => {
   const [allCards, setAllCards] = useState<Card[]>(pokemonArray)
   const [victoryState, setVictoryState] = useState(false)
   const [cardToCheck, setCardToCheck] = useState<CardWithIndex | null>(null)
   const [isClicked, setIsClicked] = useState(false)
   const [score, setScore] = useState(0)
-  const [isPlayAgain, setIsPlayAgain] = useState(false)
+
+  useEffect(() => {
+    setAllCards(pokemonArray)
+    setVictoryState(false)
+    setCardToCheck(null)
+    setIsClicked(false)
+    setScore(0)
+  }, [pokemonArray])
 
   useEffect(() => {
     if (IsGameOver(allCards)) {
       setVictoryState(true)
     }
   }, [allCards, victoryState])
-
-  useEffect(() => {
-    if (isPlayAgain) {
-      setIsPlayAgain(false)
-      const numPokemon = pokemonArray.length / 2
-      const newFirstNPokemon = getFirstNPokemon(numPokemon)
-      const newPokemonDeck = getDeck(newFirstNPokemon)
-      setAllCards(newPokemonDeck)
-      setVictoryState(false)
-      setCardToCheck(null)
-      setIsClicked(false)
-      setScore(0)
-    }
-  }, [
-    pokemonArray,
-    isPlayAgain,
-    allCards,
-    victoryState,
-    cardToCheck,
-    isClicked,
-    score,
-  ])
 
   const toggleCard = (index: number) => {
     setAllCards((prevState) => {
@@ -142,9 +127,7 @@ const Game: React.FunctionComponent<GameProps> = ({ pokemonArray }) => {
 
           <button
             className={`${style.gameInfoForItems} ${style.playAgainButton}`}
-            onClick={() => {
-              setIsPlayAgain(true)
-            }}
+            onClick={() => resetGame(true)}
           >
             Play again
           </button>
@@ -152,12 +135,12 @@ const Game: React.FunctionComponent<GameProps> = ({ pokemonArray }) => {
         <div className={style.deck}>
           {allCards.map((card, indexCard) => {
             return (
-              <div
-                key={indexCard}
-                className="card"
-                onClick={() => checkIfCardsMatched(card, indexCard)}
-              >
-                <CardComponent card={card} />
+              <div key={indexCard} className="card">
+                <CardComponent
+                  card={card}
+                  cardIndex={indexCard}
+                  turnCard={checkIfCardsMatched}
+                />
               </div>
             )
           })}

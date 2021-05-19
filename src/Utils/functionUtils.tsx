@@ -28,4 +28,11 @@ const getFirstNPokemon = (numberOfPokemon: number): string[] => {
 
   return arrayWithElement
 }
-export { shuffle, getDeck, IsGameOver, getFirstNPokemon }
+
+const initPokemonDetck = (numOfCard: number): Card[] => {
+  const firstNPokemon = getFirstNPokemon(4)
+  const pokemonArray = getDeck(firstNPokemon)
+  return pokemonArray
+}
+
+export { shuffle, getDeck, IsGameOver, getFirstNPokemon, initPokemonDetck }
