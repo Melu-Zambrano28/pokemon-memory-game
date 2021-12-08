@@ -26,7 +26,7 @@ const CardComponent: FunctionComponent<CardComponentProps> = ({
           <img
             className={style.pokemon}
             alt={`${card.pokemonName}`}
-            src={`${imagePath}${card.pokemonName}.svg`}
+            src={`${card.srcImage}`}
           ></img>
         )}
       </div>
