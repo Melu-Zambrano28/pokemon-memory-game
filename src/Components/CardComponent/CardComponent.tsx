@@ -13,7 +13,6 @@ const CardComponent: FunctionComponent<CardComponentProps> = ({
   cardIndex,
   turnCard,
 }) => {
-  const imagePath = process.env.REACT_APP_IMAGE_POKEMON_PATH
   return (
     <div
       className={`${style.cardContainer} ${

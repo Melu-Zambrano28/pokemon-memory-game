@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import style from './App.module.scss'
 import { Card, Game } from './Components/GameComponent/GameComponent'
-import { getDeckFromResponse, getFirstNPokemon } from './Utils/functionUtils'
+import { Loading } from './Components/LoadingComponent/LoadingComponent'
+import { getDeck, getFirstNPokemon } from './Utils/functionUtils'
 
 export type PokeApiResponse = {
   id: number
@@ -21,32 +22,11 @@ const fetchPokemon = async (idPokemon: string): Promise<PokeApiResponse> => {
   return response.json()
 }
 
-const Loading: React.FunctionComponent = () => {
-  useEffect(() => {
-    console.log('mi sono montato')
-
-    return () => console.log('mi sono smontato ciao ciao')
-  }, [])
-
-  return <div>Loading...</div>
-}
-
 const App: React.FunctionComponent = () => {
-  const [isPlayAgain, setIsPlayAgain] = useState(false)
+  const [playAgain, setPlayAgain] = useState(false)
   const [pokemonArraystate, setPokemonArrayState] = useState<Card[]>([])
   const [loadingApi, setLoadingApi] = useState(false)
   const [errorApi, setErrorApi] = useState<Error | null>(null)
-  const [responseApi, setResponseApi] = useState<PokeApiResponse[]>([])
-
-  // useEffect(() => {
-  //   const fetchImages = () => {
-  //     const imagePath = process.env.REACT_APP_IMAGE_POKEMON_PATH
-  //     pokemonArray.map((el) => {
-  //       return fetch(`${imagePath}${el.pokemonName}.svg`)
-  //     })
-  //   }
-  //   fetchImages()
-  // }, [pokemonArray])
 
   const fetchPokemonAndCreateDeck = async () => {
     try {
@@ -59,10 +39,7 @@ const App: React.FunctionComponent = () => {
       })
 
       const pokemonResult = await Promise.all(pokemonFromApi)
-      setResponseApi(pokemonResult)
-
-      const arrayOfPokeCard = getDeckFromResponse(pokemonResult)
-
+      const arrayOfPokeCard = getDeck(pokemonResult)
       console.log('this is an array of pokemon card ', arrayOfPokeCard)
       setPokemonArrayState(arrayOfPokeCard)
     } catch (error) {
@@ -77,11 +54,21 @@ const App: React.FunctionComponent = () => {
   }, [])
 
   useEffect(() => {
-    if (isPlayAgain) {
-      fetchPokemonAndCreateDeck()
-      setIsPlayAgain(false)
+    const fetchImages = () => {
+      pokemonArraystate.map((el) => {
+        console.log('Fetching image ...')
+        return fetch(el.srcImage)
+      })
     }
-  }, [isPlayAgain])
+    fetchImages()
+  }, [pokemonArraystate])
+
+  useEffect(() => {
+    if (playAgain) {
+      fetchPokemonAndCreateDeck()
+      setPlayAgain(false)
+    }
+  }, [playAgain])
 
   return (
     <div className={style.App}>
@@ -92,7 +79,7 @@ const App: React.FunctionComponent = () => {
       {loadingApi && <Loading />}
 
       {!loadingApi && (
-        <Game pokemonArray={pokemonArraystate} resetGame={setIsPlayAgain} />
+        <Game pokemonArray={pokemonArraystate} resetGame={setPlayAgain} />
       )}
     </div>
   )
