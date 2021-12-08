@@ -4,9 +4,11 @@ import { CardComponent } from '../CardComponent/CardComponent'
 import style from './GameComponent.module.scss'
 
 export type Card = {
+  pokemonId: number
   pokemonName: string
   isVisible: boolean
   isMatched: boolean
+  srcImage: string
 }
 
 type CardWithIndex = Card & {

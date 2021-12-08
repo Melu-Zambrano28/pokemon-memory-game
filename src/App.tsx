@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import style from './App.module.scss'
 import { Card, Game } from './Components/GameComponent/GameComponent'
-import { initPokemonDeck } from './Utils/functionUtils'
+import { getDeckFromResponse, getFirstNPokemon } from './Utils/functionUtils'
 
-type PokeApiResponse = {
+export type PokeApiResponse = {
+  id: number
   name: string
   sprites: {
     other: {
@@ -20,11 +21,19 @@ const fetchPokemon = async (idPokemon: string): Promise<PokeApiResponse> => {
   return response.json()
 }
 
+const Loading: React.FunctionComponent = () => {
+  useEffect(() => {
+    console.log('mi sono montato')
+
+    return () => console.log('mi sono smontato ciao ciao')
+  }, [])
+
+  return <div>Loading...</div>
+}
+
 const App: React.FunctionComponent = () => {
-  const pokemonArray = React.useMemo(() => initPokemonDeck(4), []) //una sola volta per render, stesso [] === []
   const [isPlayAgain, setIsPlayAgain] = useState(false)
-  const [pokemonArraystate, setPokemonArrayState] =
-    useState<Card[]>(pokemonArray)
+  const [pokemonArraystate, setPokemonArrayState] = useState<Card[]>([])
   const [loadingApi, setLoadingApi] = useState(false)
   const [errorApi, setErrorApi] = useState<Error | null>(null)
   const [responseApi, setResponseApi] = useState<PokeApiResponse[]>([])
@@ -39,35 +48,40 @@ const App: React.FunctionComponent = () => {
   //   fetchImages()
   // }, [pokemonArray])
 
-  useEffect(() => {
-    const getResponse = async () => {
-      try {
-        setLoadingApi(true)
-        const pokemonFromApi = pokemonArray.map(async ({ pokemonName }) => {
-          const pokemon = await fetchPokemon(pokemonName)
+  const fetchPokemonAndCreateDeck = async () => {
+    try {
+      setLoadingApi(true)
+      const pokemonArray = getFirstNPokemon(4)
+      const pokemonFromApi = pokemonArray.map(async (pokemonIndex) => {
+        const pokemon = await fetchPokemon(pokemonIndex)
 
-          return pokemon
-        })
+        return pokemon
+      })
 
-        const pokemonResult = await Promise.all(pokemonFromApi)
-        setResponseApi(pokemonResult)
-      } catch (error) {
-        setErrorApi(new Error(`this is an Error :O )`))
-      } finally {
-        setLoadingApi(false)
-      }
+      const pokemonResult = await Promise.all(pokemonFromApi)
+      setResponseApi(pokemonResult)
+
+      const arrayOfPokeCard = getDeckFromResponse(pokemonResult)
+
+      console.log('this is an array of pokemon card ', arrayOfPokeCard)
+      setPokemonArrayState(arrayOfPokeCard)
+    } catch (error) {
+      setErrorApi(new Error(`this is an Error :O )`))
+    } finally {
+      setLoadingApi(false)
     }
+  }
 
-    getResponse()
-  }, [pokemonArray])
+  useEffect(() => {
+    fetchPokemonAndCreateDeck()
+  }, [])
 
   useEffect(() => {
     if (isPlayAgain) {
-      const newPokemonArray = initPokemonDeck(4)
-      setPokemonArrayState(newPokemonArray)
+      fetchPokemonAndCreateDeck()
       setIsPlayAgain(false)
     }
-  }, [isPlayAgain, pokemonArraystate])
+  }, [isPlayAgain])
 
   return (
     <div className={style.App}>
@@ -75,7 +89,7 @@ const App: React.FunctionComponent = () => {
         <h1>Pokemon Memory Game</h1>
       </div>
 
-      {loadingApi && <div>loading Game...</div>}
+      {loadingApi && <Loading />}
 
       {!loadingApi && (
         <Game pokemonArray={pokemonArraystate} resetGame={setIsPlayAgain} />
