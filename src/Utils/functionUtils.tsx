@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Card } from '../Components/GameComponent/GameComponent'
 
 const shuffle = (array: string[]) => {
@@ -29,10 +30,11 @@ const getFirstNPokemon = (numberOfPokemon: number): string[] => {
   return arrayWithElement
 }
 
-const initPokemonDetck = (numOfCard: number): Card[] => {
-  const firstNPokemon = getFirstNPokemon(4)
+const initPokemonDeck = (numOfCard: number): Card[] => {
+  const firstNPokemon = getFirstNPokemon(numOfCard)
+
   const pokemonArray = getDeck(firstNPokemon)
   return pokemonArray
 }
 
-export { shuffle, getDeck, IsGameOver, getFirstNPokemon, initPokemonDetck }
+export { shuffle, getDeck, IsGameOver, getFirstNPokemon, initPokemonDeck }
